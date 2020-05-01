@@ -116,6 +116,6 @@ The `transitions` property is where you'll regroup your common classes from `inT
 
 Type: `string`
 
-Default value: `true`
+Default value: `false`
 
 The `offVisible` property is where you'll define if the `slot` should be `hidden` when off or not.
