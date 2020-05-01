@@ -25,6 +25,8 @@ Here's how it should be used:
 ```html
 <script>
     import Transition from 'svelte-class-transition';
+
+    export let toggle;
 </script>
 
 <Transition
