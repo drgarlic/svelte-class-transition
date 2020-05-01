@@ -1,0 +1,32 @@
+{
+  "name": "svelte-class-transition",
+  "version": "1.0.0",
+  "description": "A very simple Svelte 3 component that allows you to do transition using CSS classes",
+  "main": "Transition.svelte",
+  "svelte": "Transition.svelte",
+  "repository": {
+    "type": "git",
+    "url": "git://https://github.com/gawlk/svelte-class-transition.git"
+  },
+  "keywords": [
+    "transition",
+    "svelte",
+    "svelte3"
+  ],
+  "author": {
+    "name": "Kevin Gawlik",
+    "email": "kevin@gawlik.io",
+    "url": "https://github.com/gawlk"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gawlk/svelte-class-transition/issues"
+  },
+  "homepage": "https://github.com/gawlk/svelte-class-transition#readme",
+  "peerDependencies": {
+    "svelte": "^3.21.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
+}
