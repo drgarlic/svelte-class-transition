@@ -114,7 +114,7 @@ The `transitions` property is where you'll regroup your common classes from `inT
 
 #### `offVisible`
 
-Type: `string`
+Type: `boolean`
 
 Default value: `false`
 
