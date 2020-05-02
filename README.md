@@ -1,6 +1,8 @@
 # svelte-class-transition
 
-`svelte-class-transition` is a very simple Svelte 3 component that allows you to do transition using CSS classes.
+`svelte-class-transition` is a very simple Svelte 3 component that allows you to do transitions using CSS classes.
+
+You can find multiple examples with different use cases here: https://svelte-class-transition-examples.now.sh/
 
 ## Install
 
@@ -18,7 +20,7 @@ npm install svelte-class-transition
 
 ## Usage
 
-### Examples
+### Implementation
 
 Here's how it should be used:
 
@@ -44,8 +46,6 @@ Here's how it should be used:
     </div>
 </Transition>
 ```
-
-You can find multiple examples [here](https://svelte-class-transition-examples.now.sh/).
 
 ### Props
 
