@@ -29,12 +29,11 @@
 
         if (toggle === undefined) {
             slot.hidden = true;
-
             if (document.readyState === 'complete') {
-                initTogglelessTransition();
+                setTimeout(() => initTogglelessTransition(), 50);
             } else {
                 window.addEventListener('load', () => {
-                    initTogglelessTransition();
+                    setTimeout(() => initTogglelessTransition(), 50);
                 }, { once: true });
             }
         } else {
