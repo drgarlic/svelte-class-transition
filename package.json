@@ -1,6 +1,6 @@
 {
   "name": "svelte-class-transition",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A very simple Svelte 3 component that allows you to do transition using CSS classes",
   "main": "Transition.svelte",
   "svelte": "Transition.svelte",
