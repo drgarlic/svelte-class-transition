@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from 'svelte';
+    import { onMount, tick } from 'svelte';
 
     export let toggle = undefined;
     export let transitions = '';
@@ -14,6 +14,7 @@
     let slot;
     let slotClasses;
     let parent;
+    let mounted;
 
     const STATE = {
         IDLE: 0,
@@ -23,7 +24,11 @@
 
     let state = STATE.IDLE;
 
-    onMount(() => {
+    onMount(async () => {
+        mounted = true;
+
+        await tick();
+
         slot = div.nextElementSibling;
         slotClasses = slot.classList.value;
 
@@ -143,4 +148,7 @@
     bind:this={div}
     hidden
 />
-<slot />
+
+{#if mounted}
+    <slot />
+{/if}
