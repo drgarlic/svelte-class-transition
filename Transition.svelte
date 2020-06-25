@@ -12,7 +12,6 @@
 
     let div;
     let slot;
-    let slotClasses;
     let parent;
     let mounted;
 
@@ -30,15 +29,14 @@
         await tick();
 
         slot = div.nextElementSibling;
-        slotClasses = slot.classList.value;
 
         if (toggle === undefined) {
             slot.hidden = true;
             if (document.readyState === 'complete') {
-                setTimeout(() => initTogglelessTransition(), 50);
+                setTimeout(initTogglelessTransition, 50);
             } else {
                 window.addEventListener('load', () => {
-                    setTimeout(() => initTogglelessTransition(), 50);
+                    setTimeout(initTogglelessTransition, 50);
                 }, { once: true });
             }
         } else {
@@ -46,14 +44,15 @@
         }
     });
 
-    const initTogglelessTransition = () => {
+    const initTogglelessTransition = async () => {
         searchParentTransition();
+
         toggle = parent ? parent.toggle : false;
+
         initTransition();
+
         if (! parent) {
-            setTimeout(() => {
-                toggle = true;
-            }, navigator.userAgent.toLowerCase().includes('firefox') ? 200 : 50);
+            setTimeout(() => { toggle = true }, 200);
         }
     };
 
@@ -84,20 +83,31 @@
         });
     };
 
+    const setClasses = (...classes) => {
+        const toRemove = clean(transitions, inTransition, outTransition, inState, onState, outState);
+        slot.classList.value = clean(slot.classList.value).split(' ').filter(c => ! toRemove.includes(c)).join(' ') + ' ' + classes.join(' ');
+    }
+
+    const clean = (...args) => args.join(' ').replace(/\s+/g, ' ').trim();
+
     const initTransition = () => {
         slot.toggle = toggle;
 
         if (toggle) {
-            slot.classList.value = slotClasses + ' ' + transitions + ' ' + outTransition + ' ' + onState;
+            setClasses(transitions, outTransition, onState);
             transitionEndListener();
         } else {
-            slot.hidden = ! offVisible;
-            slot.classList.value = slotClasses + ' ' + inState;
+            slot.hidden = ! parent && ! offVisible;
+            setClasses(transitions, inState);
             setTimeout(() => {
-                slot.classList.value = slot.classList.value + ' ' + transitions + ' ' + inTransition;
+                setClasses(transitions, inTransition, inState);
                 transitionEndListener();
             }, 250);
         }
+        if (! toggle) {
+            slot.hidden = ! parent && ! offVisible;
+        }
+        transitionEndListener();
     };
 
     const transitionEndListener = () => {
@@ -108,9 +118,10 @@
                 && ((toggle && state === STATE.ENTERING) || (! toggle && state === STATE.LEAVING))
             ) {
                 state = STATE.IDLE;
+
                 if (! toggle) {
-                    slot.hidden = ! offVisible;
-                    slot.classList.value = slotClasses + ' ' + transitions + ' ' + inTransition + ' ' + inState;
+                    setClasses(transitions, inTransition, inState);
+                    slot.hidden = ! parent && ! offVisible;
                 }
             }
         });
@@ -129,20 +140,24 @@
     const enterEvent = () => {
         if (slot.hidden) {
             slot.hidden = false;
-            setTimeout(() => {
-                enterEvent();
-            }, 50);
+            setTimeout(enterEvent, 50);
         } else {
             state = STATE.ENTERING;
-            slot.classList.value = slotClasses + ' ' + transitions + ' ' + inTransition + ' ' + onState;
+            setClasses(transitions, inTransition, onState);
         }
     };
 
     const leaveEvent = () => {
         state = STATE.LEAVING;
-        slot.classList.value = slotClasses + ' ' + transitions + ' ' + outTransition + ' ' + outState;
+        setClasses(transitions, outTransition, outState);
     };
 </script>
+
+<style>
+    :global([hidden]) {
+        display: none !important;
+    }
+</style>
 
 <div
     bind:this={div}
